@@ -29,6 +29,10 @@ inputs:
     description: 'skip saving'
     required: false
     defalut: false
+  only_toolchain:
+    description: 'only compile the openwrt toolchain'
+    required: false
+    defalut: false
 outputs:
   hit:
     description: 'indicate cache found'

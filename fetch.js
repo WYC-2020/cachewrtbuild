@@ -13,6 +13,7 @@ try {
 
     const toolchain = core.getInput("toolchain");
     var skiptoolchain = core.getInput("skip");
+    var onlytoolchain = core.getInput("only_toolchain");
     if (toolchain == "true") {
         stdout = execSync('git log --pretty=tformat:"%h" -n1 tools toolchain')
             .toString()
@@ -54,6 +55,12 @@ try {
                     );
                     //execSync('bash -c \'find build_dir\/{host*,toolchain-*} -name .built\\* -exec touch {} \\;; touch staging_dir\/{host*,toolchain-*}\/stamp\/.*\'');
                 }
+		if (onlytoolchain == "true") {
+                    console.log("only toolchain");
+                    execSync(
+                        "sed -i 's#$(curdir)/builddirs := .*#$(curdir)/builddirs :=#' toolchain/Makefile"
+                    );
+		}
             }
         });
 } catch (error) {
