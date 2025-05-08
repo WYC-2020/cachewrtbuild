@@ -34,7 +34,7 @@ try {
         paths.push(".ccache");
     }
 
-    const cache = require("@actions/cache");
+    const cache = require("@actions/cache@v4");
     const clean = core.getInput("clean");
     if (clean == "true") return;
     console.log(keyString, restoreKeys);
