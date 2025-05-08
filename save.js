@@ -31,7 +31,7 @@ try {
             paths.push(".ccache");
         }
 
-        const cache = require("@actions/cache");
+        const cache = require("@actions/cache@v4");
         console.log(keyString);
         const cacheId = cache.saveCache(paths, keyString).then((res) => {
             if (typeof res !== "undefined" && res) {
