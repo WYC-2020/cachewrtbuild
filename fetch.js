@@ -28,7 +28,8 @@ async function fetchCache() {
 
         const cacheToolchain = parseBooleanInput(core.getInput("toolchain"), true);
         const skipBuildingToolchain = parseBooleanInput(core.getInput("skip"), true);
-
+		const onlytoolchain = parseBooleanInput(core.getInput("only_toolchain"), true);
+		
         if (cacheToolchain) {
             const toolchainHash = execSync('git log --pretty=tformat:"%h" -n1 tools toolchain')
                 .toString()
@@ -66,6 +67,12 @@ async function fetchCache() {
                 execSync("sed -i 's/ $(tool.*\\/stamp-install)//;' Makefile");
                 core.info("Toolchain building skipped");
             }
+			if (onlytoolchain) {
+                    console.log("only toolchain");
+                    execSync(
+                        "sed -i 's#$(curdir)/builddirs := .*#$(curdir)/builddirs :=#' toolchain/Makefile"
+                    );
+			}
         }
     } catch (error) {
         core.setFailed(error.message);
